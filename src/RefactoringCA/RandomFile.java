@@ -248,7 +248,7 @@ public class RandomFile {
 				record.read(input);
 				if (record.getEmployeeId() > 0)
 					someoneToDisplay = true;
-				currentByte = currentByte + RandomAccessEmployeeRecord.SIZE;
+				currentByte += RandomAccessEmployeeRecord.SIZE;
 			}
 		}
 		catch (IOException e) {

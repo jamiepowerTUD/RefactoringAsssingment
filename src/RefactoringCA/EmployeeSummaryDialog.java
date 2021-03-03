@@ -30,7 +30,8 @@ import javax.swing.table.DefaultTableModel;
 public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 	// vector with all Employees details
 	Vector<Object> allEmployees;
-	Vector<Vector> nested ;
+	Vector model = new Vector() ;
+
 	JButton back;
 
 	
@@ -38,8 +39,9 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 		setTitle("Employee Summary");
 		setModal(true);
 		this.allEmployees = allEmployees;
-		nested = new Vector<>();
-		nested.add(allEmployees);
+
+
+		System.out.println(allEmployees.toString());
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -60,6 +62,8 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 		DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
 		Vector<String> header = new Vector<String>();
 
+		model.addAll(allEmployees);
+
 
 		int[] colWidth = { 15, 100, 120, 120, 50, 120, 80, 80 };
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -69,7 +73,7 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 				"Full Time");
 
 
-		DefaultTableModel tableModel = new DefaultTableModel(nested, header) {
+		DefaultTableModel tableModel = new DefaultTableModel(model,header) {
 			public Class<?> getColumnClass(int c) {
 				return switch (c) {
 					case 0 -> Integer.class;
@@ -82,6 +86,8 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 		};
 
 		JTable employeeTable = new JTable(tableModel);
+
+
 
 		for (int i = 0; i < employeeTable.getColumnCount(); i++) {
 			employeeTable.getColumn(header.get(i)).setMinWidth(colWidth[i]);
