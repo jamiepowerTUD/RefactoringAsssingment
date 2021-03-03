@@ -1,5 +1,4 @@
 package RefactoringCA;/*
-/*
  * 
  * This is a Random Access Employee record definition
  * 
@@ -10,22 +9,22 @@ import java.io.IOException;
 
 public class RandomAccessEmployeeRecord extends Employee
 {  
-    public static final int SIZE = 175; // Size of each RandomAccessEmployeeRecord object
+    public static final int SIZE = 175;
 
-   // Create empty record
+
    public RandomAccessEmployeeRecord()
    {
       this(0, "","","",'\0', "", 0.0, false);
    }
 
-   // Initialize record with details
+
    public RandomAccessEmployeeRecord( int employeeId, String pps, String surname, String firstName, char gender, 
 		   String department, double salary, boolean fullTime)
    {
       super(employeeId, pps, surname, firstName, gender, department, salary, fullTime);
    }
 
-   // Read a record from specified RandomAccessFile
+
    public void read( RandomAccessFile file ) throws IOException
    {
 	   	setEmployeeId(file.readInt());
@@ -38,7 +37,7 @@ public class RandomAccessEmployeeRecord extends Employee
 		setFullTime(file.readBoolean());
    }
 
-   // Ensure that string is correct length
+
    private String readName( RandomAccessFile file ) throws IOException
    {
       char[] name = new char[ 20 ];
@@ -51,7 +50,7 @@ public class RandomAccessEmployeeRecord extends Employee
       return new String( name ).replace( '\0', ' ' );
    }
 
-   // Write a record to specified RandomAccessFile
+
    public void write( RandomAccessFile file ) throws IOException
    {
       file.writeInt( getEmployeeId() );
@@ -64,7 +63,7 @@ public class RandomAccessEmployeeRecord extends Employee
       file.writeBoolean(getFullTime());
    }
 
-   // Ensure that string is correct length
+
    private void writeName( RandomAccessFile file, String name )
       throws IOException
    {
@@ -75,6 +74,7 @@ public class RandomAccessEmployeeRecord extends Employee
       else 
          buffer = new StringBuffer( 20 );
 
+      buffer.setLength( 20 );
       file.writeChars( buffer.toString() );
    }
 }

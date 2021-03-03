@@ -50,20 +50,17 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 		setVisible(true);
 
 	}
-	// initialise container
+
 	public Container summaryPane() {
 		JPanel summaryDialog = new JPanel(new MigLayout());
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-		// column center alignment
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 
-		// column left alignment
 		DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
 		Vector<String> header = new Vector<String>();
 
 
-		// column widths
 		int[] colWidth = { 15, 100, 120, 120, 50, 120, 80, 80 };
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		leftRenderer.setHorizontalAlignment(JLabel.LEFT);
@@ -71,7 +68,7 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 		Collections.addAll(header, "ID", "PPS Number", "Surname", "First Name", "Gender", "Department", "Salary",
 				"Full Time");
 
-		// construnct table and choose table model for each column
+
 		DefaultTableModel tableModel = new DefaultTableModel(nested, header) {
 			public Class<?> getColumnClass(int c) {
 				return switch (c) {
@@ -85,7 +82,7 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 		};
 
 		JTable employeeTable = new JTable(tableModel);
-		// add header names to table
+
 		for (int i = 0; i < employeeTable.getColumnCount(); i++) {
 			employeeTable.getColumn(header.get(i)).setMinWidth(colWidth[i]);
 		}

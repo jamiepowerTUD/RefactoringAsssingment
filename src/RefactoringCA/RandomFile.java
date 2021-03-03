@@ -13,17 +13,20 @@ public class RandomFile {
 	private RandomAccessFile output;
 	private RandomAccessFile input;
 
+
 	public void createFile(String fileName) {
 		RandomAccessFile file = null;
 
 		try
 		{
 			file = new RandomAccessFile(fileName, "rw");
+
 		}
 		catch (IOException ioException) {
 			JOptionPane.showMessageDialog(null, "Error processing file!");
 			System.exit(1);
 		}
+
 		finally {
 			try {
 				if (file != null)
@@ -47,6 +50,7 @@ public class RandomFile {
 		}
 	}
 
+
 	public void closeWriteFile() {
 		try
 		{
@@ -59,8 +63,10 @@ public class RandomFile {
 		}
 	}
 
+
 	public long addRecords(Employee employeeToAdd) {
 		long currentRecordStart = 0;
+
 
 		try
 		{
@@ -81,6 +87,7 @@ public class RandomFile {
 
 
 	public void changeRecords(Employee newDetails, long byteToStart) {
+
 		try
 		{
 			RandomAccessEmployeeRecord record = new RandomAccessEmployeeRecord(newDetails.getEmployeeId(), newDetails.getPps(),
@@ -95,6 +102,7 @@ public class RandomFile {
 		}
 	}
 
+
 	public void deleteRecords(long byteToStart) {
 
 		try
@@ -108,6 +116,7 @@ public class RandomFile {
 		}
 	}
 
+
 	public void openReadFile(String fileName) {
 		try
 		{
@@ -117,7 +126,6 @@ public class RandomFile {
 			JOptionPane.showMessageDialog(null, "File is not suported!");
 		}
 	}
-
 
 	public void closeReadFile() {
 		try
@@ -133,16 +141,7 @@ public class RandomFile {
 
 
 	public long getFirst() {
-		long byteToStart = 0;
-
-		try {
-			byteToStart = input.length();
-		}
-		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error Accessing File");
-		}
-		
-		return byteToStart;
+		return 0;
 	}
 
 
@@ -152,64 +151,64 @@ public class RandomFile {
 		try {
 			byteToStart = input.length() - RandomAccessEmployeeRecord.SIZE;
 		}
-		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error Accessing File");
+		catch (IOException ignored) {
 		}
 
 		return byteToStart;
 	}
 
-
 	public long getNext(long readFrom) {
 
 		try {
 			input.seek(readFrom);
-			if (readFrom + RandomAccessEmployeeRecord.SIZE == input.length()) {
+			if (readFrom + RandomAccessEmployeeRecord.SIZE == input.length())
 				readFrom = 0;
-			} else
-				readFrom = readFrom + RandomAccessEmployeeRecord.SIZE;
+			else
+				readFrom += RandomAccessEmployeeRecord.SIZE;
 		}
-		catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Error Formatting Number");
+		catch (NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(null, "Number Format Error");
 		}
-		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error Accessing File");
+		catch (IOException e)
+		{
+			JOptionPane.showMessageDialog(null, "Error closing file!");
 		}
 		return readFrom;
 	}
 
-	// Get position of previous record in file
+
 	public long getPrevious(long readFrom) {
+
 
 		try {
 			input.seek(readFrom);
 			if (readFrom == 0)
 				readFrom = input.length() - RandomAccessEmployeeRecord.SIZE;
 			else
-				readFrom = readFrom - RandomAccessEmployeeRecord.SIZE;
+				readFrom -= RandomAccessEmployeeRecord.SIZE;
 		}
 		catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Error Formatting Number");
+			JOptionPane.showMessageDialog(null, "Number Format Error!");
 		}
 		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error Accessing File");
+			JOptionPane.showMessageDialog(null, "Error closing file!");
 		}
 		return readFrom;
 	}
 
-	// Get object from file in specified position
+
 	public Employee readRecords(long byteToStart) {
 		RandomAccessEmployeeRecord record = new RandomAccessEmployeeRecord();
 
 		try {
-			input.seek(byteToStart);// Look for proper position in file
-			record.read(input);// Read record from file
+			input.seek(byteToStart);
+			record.read(input);
 		}
-		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error Accessing File");
+		catch (IOException ignored) {
 		}
 
-		return record;
+		return record ;
 	}
 
 
@@ -219,7 +218,7 @@ public class RandomFile {
 		long currentByte = 0;
 
 		try {
-			while (currentByte != input.length()) {
+			while (currentByte != input.length() && !ppsExist) {
 				if (currentByte != currentByteStart) {
 					input.seek(currentByte);
 					record.read(input);
@@ -232,9 +231,8 @@ public class RandomFile {
 			}
 		}
 		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error accessing record");
+			JOptionPane.showMessageDialog(null, "Error accessing Record!");
 		}
-
 		return ppsExist;
 	}
 
@@ -254,7 +252,7 @@ public class RandomFile {
 			}
 		}
 		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error accessing record");
+			JOptionPane.showMessageDialog(null, "Error Accessing Record!");
 		}
 
 		return someoneToDisplay;
