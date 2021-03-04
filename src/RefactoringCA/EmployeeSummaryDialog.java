@@ -28,23 +28,17 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class EmployeeSummaryDialog extends JDialog implements ActionListener {
-	// vector with all Employees details
+
 	Vector<Object> allEmployees;
 	Vector model = new Vector() ;
-
 	JButton back;
-
 	
 	public EmployeeSummaryDialog(Vector<Object> allEmployees) {
 		setTitle("Employee Summary");
 		setModal(true);
 		this.allEmployees = allEmployees;
 
-
-		System.out.println(allEmployees.toString());
-
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 		setContentPane(new JScrollPane(summaryPane()));
 
 		setSize(850, 500);
@@ -58,12 +52,10 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-
 		DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
 		Vector<String> header = new Vector<String>();
 
 		model.addAll(allEmployees);
-
 
 		int[] colWidth = { 15, 100, 120, 120, 50, 120, 80, 80 };
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -71,8 +63,6 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 
 		Collections.addAll(header, "ID", "PPS Number", "Surname", "First Name", "Gender", "Department", "Salary",
 				"Full Time");
-
-
 		DefaultTableModel tableModel = new DefaultTableModel(model,header) {
 			public Class<?> getColumnClass(int c) {
 				return switch (c) {
@@ -88,11 +78,9 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 		JTable employeeTable = new JTable(tableModel);
 
 
-
 		for (int i = 0; i < employeeTable.getColumnCount(); i++) {
 			employeeTable.getColumn(header.get(i)).setMinWidth(colWidth[i]);
 		}
-		// set alignments
 		employeeTable.getColumnModel().getColumn(0).setCellRenderer(leftRenderer);
 		employeeTable.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 		employeeTable.getColumnModel().getColumn(6).setCellRenderer(new DecimalFormatRenderer());
@@ -119,7 +107,7 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 		}
 
 	}
-	// format for salary column
+
 	static class DecimalFormatRenderer extends DefaultTableCellRenderer {
 
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
@@ -128,8 +116,7 @@ public class EmployeeSummaryDialog extends JDialog implements ActionListener {
 			Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			 JLabel label = (JLabel) c;
 			 label.setHorizontalAlignment(JLabel.RIGHT);
-			 // format salary column
-			value = new DecimalFormat("\u20ac ###,###,##0.00" ).format(value);
+			 value = new DecimalFormat("\u20ac ###,###,##0.00" ).format(value);
 
 			return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		}

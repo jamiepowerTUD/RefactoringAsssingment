@@ -59,7 +59,7 @@ public class Employee{
 		return this.fullTime;
 	}
 
-	// Setter methods
+
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}

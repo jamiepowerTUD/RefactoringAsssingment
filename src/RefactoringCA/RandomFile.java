@@ -140,10 +140,6 @@ public class RandomFile {
 	}
 
 
-	public long getFirst() {
-		return 0;
-	}
-
 
 	public long getLast() {
 		long byteToStart = 0;
@@ -153,12 +149,10 @@ public class RandomFile {
 		}
 		catch (IOException ignored) {
 		}
-
 		return byteToStart;
 	}
 
 	public long getNext(long readFrom) {
-
 		try {
 			input.seek(readFrom);
 			if (readFrom + RandomAccessEmployeeRecord.SIZE == input.length())
@@ -167,13 +161,9 @@ public class RandomFile {
 				readFrom += RandomAccessEmployeeRecord.SIZE;
 		}
 		catch (NumberFormatException e)
-		{
-			JOptionPane.showMessageDialog(null, "Number Format Error");
-		}
+		{ JOptionPane.showMessageDialog(null, "Number Format Error"); }
 		catch (IOException e)
-		{
-			JOptionPane.showMessageDialog(null, "Error closing file!");
-		}
+		{ JOptionPane.showMessageDialog(null, "Error closing file!"); }
 		return readFrom;
 	}
 
@@ -225,14 +215,10 @@ public class RandomFile {
 					if (record.getPps().trim().equalsIgnoreCase(pps)) {
 						ppsExist = true;
 						JOptionPane.showMessageDialog(null, "PPS number already exist!");
-					}
-				}
+					} }
 				currentByte += RandomAccessEmployeeRecord.SIZE;
-			}
-		}
-		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error accessing Record!");
-		}
+			} }
+		catch (IOException e) { JOptionPane.showMessageDialog(null, "Error accessing Record!"); }
 		return ppsExist;
 	}
 
@@ -248,12 +234,8 @@ public class RandomFile {
 				record.read(input);
 				if (record.getEmployeeId() > 0)
 					someoneToDisplay = true;
-				currentByte += RandomAccessEmployeeRecord.SIZE;
-			}
-		}
-		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error Accessing Record!");
-		}
+				currentByte += RandomAccessEmployeeRecord.SIZE; } }
+		catch (IOException e) { JOptionPane.showMessageDialog(null, "Error Accessing Record!"); }
 
 		return someoneToDisplay;
 	}
